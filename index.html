@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahala EK | Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-head: 'Sora', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --accent: #C29E3A;
+    --accent2: #6d8dff;
+  }
+  [data-theme="dark"] {
+    --bg: #0a0e1a;
+    --bg2: #0f1526;
+    --text: #e8ecf5;
+    --muted: #9aa4bd;
+    --glass: rgba(255,255,255,0.06);
+    --glass-border: rgba(255,255,255,0.12);
+    --shadow: 0 8px 32px rgba(0,0,0,0.45);
+    --hero-glow1: rgba(109,141,255,0.25);
+    --hero-glow2: rgba(194,158,58,0.18);
+  }
+  [data-theme="light"] {
+    --bg: #f4f6fb;
+    --bg2: #ffffff;
+    --text: #1a2238;
+    --muted: #5a6478;
+    --glass: rgba(255,255,255,0.65);
+    --glass-border: rgba(26,34,56,0.10);
+    --shadow: 0 8px 32px rgba(26,34,56,0.10);
+    --hero-glow1: rgba(109,141,255,0.30);
+    --hero-glow2: rgba(194,158,58,0.25);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    transition: background .4s, color .4s;
+    overflow-x: hidden;
+  }
+  h1,h2,h3 { font-family: var(--font-head); }
+
+  /* ---------- Nav ---------- */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 14px 6vw;
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  nav .logo { font-family:var(--font-head); font-weight:800; font-size:1.15rem; }
+  nav .logo span { color: var(--accent); }
+  nav ul { display:flex; gap:26px; list-style:none; }
+  nav ul a { color:var(--muted); text-decoration:none; font-size:.9rem; font-weight:500; transition:color .2s; }
+  nav ul a:hover { color: var(--accent); }
+  #themeBtn {
+    background: var(--glass); border:1px solid var(--glass-border);
+    color: var(--text); border-radius:50%; width:40px; height:40px;
+    font-size:1.1rem; cursor:pointer; transition: transform .3s;
+  }
+  #themeBtn:hover { transform: rotate(30deg) scale(1.08); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    position:relative; text-align:center; padding: 110px 20px 60px;
+  }
+  .hero::before, .hero::after {
+    content:''; position:absolute; border-radius:50%; filter: blur(90px); z-index:0;
+    animation: float 9s ease-in-out infinite alternate;
+  }
+  .hero::before { width:480px; height:480px; background:var(--hero-glow1); top:-10%; left:-8%; }
+  .hero::after  { width:420px; height:420px; background:var(--hero-glow2); bottom:-12%; right:-6%; animation-delay:-4s; }
+  @keyframes float { from{ transform:translateY(-25px) translateX(0);} to{ transform:translateY(25px) translateX(35px);} }
+  .hero-inner { position:relative; z-index:1; max-width:760px; }
+  .hero img {
+    width:150px; height:150px; object-fit:cover; border-radius:50%;
+    border:4px solid transparent;
+    background: linear-gradient(var(--bg),var(--bg)) padding-box,
+                linear-gradient(135deg,var(--accent),var(--accent2)) border-box;
+    box-shadow: var(--shadow);
+    animation: popIn 1s cubic-bezier(.2,.9,.3,1.2) both;
+  }
+  @keyframes popIn { from{ opacity:0; transform:scale(.5);} to{ opacity:1; transform:scale(1);} }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4rem); font-weight:800; margin:22px 0 6px;
+    background: linear-gradient(120deg, var(--text) 30%, var(--accent) 70%, var(--accent2));
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+    animation: rise .9s .15s ease both;
+  }
+  .hero .role {
+    font-size: clamp(1rem, 2.5vw, 1.3rem); color:var(--muted); font-weight:500;
+    animation: rise .9s .3s ease both;
+    min-height: 1.6em;
+  }
+  .hero .role .cursor { display:inline-block; width:2px; background:var(--accent); animation: blink .8s steps(1) infinite; }
+  @keyframes blink { 50%{opacity:0;} }
+  @keyframes rise { from{ opacity:0; transform:translateY(24px);} to{ opacity:1; transform:none;} }
+  .hero .contact-chips { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:26px; animation: rise .9s .45s ease both; }
+  .chip {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--glass); border:1px solid var(--glass-border);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding:10px 18px; border-radius:999px; font-size:.88rem;
+    color:var(--text); text-decoration:none; transition: transform .2s, border-color .2s;
+  }
+  .chip:hover { transform:translateY(-3px); border-color:var(--accent); }
+  .scroll-hint { margin-top:48px; color:var(--muted); font-size:1.4rem; animation: bounce 1.8s infinite; display:inline-block; }
+  @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(10px);} }
+
+  /* ---------- Sections ---------- */
+  section { max-width:1050px; margin:auto; padding:80px 24px; }
+  .sec-title { font-size:1.9rem; font-weight:700; margin-bottom:8px; }
+  .sec-title span { color:var(--accent); }
+  .sec-sub { color:var(--muted); margin-bottom:40px; font-size:.95rem; }
+
+  .glass {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  /* reveal on scroll */
+  .reveal { opacity:0; transform: translateY(36px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity:1; transform:none; }
+
+  /* ---------- Skills ---------- */
+  .skills-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:22px; }
+  .skill-card { padding:26px; transition: transform .25s; }
+  .skill-card:hover { transform: translateY(-6px); }
+  .skill-card h3 { font-size:1.02rem; margin-bottom:18px; color:var(--accent); }
+  .bar-row { margin-bottom:16px; }
+  .bar-row .bar-label { display:flex; justify-content:space-between; font-size:.85rem; margin-bottom:6px; color:var(--muted); }
+  .bar-track { height:8px; border-radius:99px; background: var(--glass-border); overflow:hidden; }
+  .bar-fill {
+    height:100%; width:0; border-radius:99px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 1.3s cubic-bezier(.25,.8,.3,1);
+  }
+
+  /* ---------- Timeline ---------- */
+  .timeline { position:relative; margin-left:14px; }
+  .timeline::before {
+    content:''; position:absolute; left:0; top:6px; bottom:6px; width:2px;
+    background: linear-gradient(var(--accent), var(--accent2));
+  }
+  .tl-item { position:relative; padding: 0 0 42px 34px; }
+  .tl-item:last-child { padding-bottom:0; }
+  .tl-item::before {
+    content:''; position:absolute; left:-7px; top:4px; width:16px; height:16px; border-radius:50%;
+    background: var(--bg); border:3px solid var(--accent);
+    box-shadow: 0 0 0 5px var(--hero-glow2);
+  }
+  .tl-item .when { font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); font-weight:600; }
+  .tl-item h3 { font-size:1.15rem; margin:6px 0 10px; }
+  .tl-item ul { list-style:none; }
+  .tl-item li { color:var(--muted); font-size:.93rem; line-height:1.65; padding-left:18px; position:relative; }
+  .tl-item li::before { content:'▹'; position:absolute; left:0; color:var(--accent); }
+
+  /* ---------- Projects ---------- */
+  .proj-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(290px,1fr)); gap:24px; }
+  .proj-card { overflow:hidden; display:flex; flex-direction:column; transition: transform .3s, box-shadow .3s; }
+  .proj-card:hover { transform: translateY(-8px) scale(1.01); }
+  .proj-thumb { height:150px; display:flex; align-items:center; justify-content:center; font-size:3rem; position:relative; overflow:hidden; }
+  .proj-thumb::after { content:''; position:absolute; inset:0; background:linear-gradient(160deg, transparent 55%, rgba(0,0,0,.22)); }
+  .pt1 { background: linear-gradient(135deg,#1d3c8f,#6d8dff); }
+  .pt2 { background: linear-gradient(135deg,#7a5c14,#C29E3A); }
+  .pt3 { background: linear-gradient(135deg,#134e4a,#2dd4bf); }
+  .proj-body { padding:22px; flex:1; display:flex; flex-direction:column; }
+  .proj-body h3 { font-size:1.08rem; margin-bottom:10px; }
+  .proj-body p { color:var(--muted); font-size:.9rem; line-height:1.6; flex:1; }
+  .tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .tag { font-size:.72rem; padding:4px 11px; border-radius:999px; border:1px solid var(--glass-border); color:var(--accent); background:var(--glass); }
+
+  /* ---------- Education / extras ---------- */
+  .duo { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:22px; }
+  .duo .glass { padding:26px; }
+  .duo h3 { color:var(--accent); font-size:1rem; margin-bottom:12px; }
+  .duo p { color:var(--muted); font-size:.92rem; line-height:1.7; }
+  .lang-pills { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .lang-pills .tag { font-size:.82rem; padding:7px 16px; }
+
+  /* ---------- Footer ---------- */
+  footer { text-align:center; padding:36px 20px 42px; color:var(--muted); font-size:.85rem; border-top:1px solid var(--glass-border); }
+  footer b { color:var(--accent); }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width:640px) {
+    nav ul { display:none; }
+    section { padding:56px 18px; }
+    .hero img { width:120px; height:120px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Sahala<span>.EK</span></div>
+  <ul>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+  </ul>
+  <button id="themeBtn" title="Toggle theme">🌙</button>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <img src="profile.jpg" alt="Sahala EK">
+    <h1>Sahala EK</h1>
+    <p class="role"><span id="typed"></span><span class="cursor">&nbsp;</span></p>
+    <div class="contact-chips">
+      <a class="chip" href="mailto:eksahala3@gmail.com">✉️ eksahala3@gmail.com</a>
+      <a class="chip" href="tel:+97477583191">📞 +974 7758 3191</a>
+      <a class="chip" href="https://linkedin.com/in/sahala-ek" target="_blank">🔗 LinkedIn</a>
+    </div>
+    <a href="#about" class="scroll-hint">▾</a>
+  </div>
+</header>
+
+<section id="about" class="reveal">
+  <h2 class="sec-title">About <span>Me</span></h2>
+  <p class="sec-sub">Who I am and what I do</p>
+  <div class="glass" style="padding:28px;">
+    <p style="color:var(--muted); line-height:1.85; font-size:1rem;">
+      Passionate Full Stack Developer specializing in <b style="color:var(--text)">.NET, Angular, and SQL Server</b>.
+      Skilled in building scalable, high-performance applications, deploying production services on
+      <b style="color:var(--text)">Azure with Docker</b>, and optimizing databases with Redis caching and MinIO for peak performance.
+    </p>
+  </div>
+</section>
+
+<section id="skills" class="reveal">
+  <h2 class="sec-title">My <span>Skills</span></h2>
+  <p class="sec-sub">Technologies I work with daily</p>
+  <div class="skills-grid">
+    <div class="glass skill-card">
+      <h3>⚡ Languages &amp; Frameworks</h3>
+      <div class="bar-row"><div class="bar-label"><span>C# / ASP.NET MVC</span><span>90%</span></div><div class="bar-track"><div class="bar-fill" data-w="90"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>.NET Core</span><span>88%</span></div><div class="bar-track"><div class="bar-fill" data-w="88"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>Angular</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" data-w="85"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>JavaScript</span><span>82%</span></div><div class="bar-track"><div class="bar-fill" data-w="82"></div></div></div>
+    </div>
+    <div class="glass skill-card">
+      <h3>🗄️ Databases</h3>
+      <div class="bar-row"><div class="bar-label"><span>SQL Server</span><span>90%</span></div><div class="bar-track"><div class="bar-fill" data-w="90"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>PostgreSQL</span><span>80%</span></div><div class="bar-track"><div class="bar-fill" data-w="80"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>Oracle</span><span>75%</span></div><div class="bar-track"><div class="bar-fill" data-w="75"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>MongoDB</span><span>72%</span></div><div class="bar-track"><div class="bar-fill" data-w="72"></div></div></div>
+    </div>
+    <div class="glass skill-card">
+      <h3>☁️ Cloud, DevOps &amp; Tools</h3>
+      <div class="bar-row"><div class="bar-label"><span>Azure</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" data-w="85"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>Docker</span><span>82%</span></div><div class="bar-track"><div class="bar-fill" data-w="82"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>REST APIs / Git</span><span>90%</span></div><div class="bar-track"><div class="bar-fill" data-w="90"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>Redis / MinIO</span><span>78%</span></div><div class="bar-track"><div class="bar-fill" data-w="78"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="reveal">
+  <h2 class="sec-title">Professional <span>Experience</span></h2>
+  <p class="sec-sub">My journey so far</p>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="when">Present</div>
+      <h3>Full Stack Developer · ClevericSolutions LLC</h3>
+      <ul>
+        <li>Developing scalable services with ASP.NET Core and Angular.</li>
+        <li>Deploying production services on Azure with Docker containers.</li>
+        <li>Integrating REST APIs, Redis caching, and MinIO for performance.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="when">2024 – 2025</div>
+      <h3>Software Developer · Manappuram Comptech</h3>
+      <ul>
+        <li>Implemented a restaurant POS system with .NET Core and Angular.</li>
+        <li>Conducted database optimization and migrations on SQL Server.</li>
+        <li>Integrated Redis caching for faster response times.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="reveal">
+  <h2 class="sec-title">Featured <span>Projects</span></h2>
+  <p class="sec-sub">Things I've built</p>
+  <div class="proj-grid">
+    <div class="glass proj-card">
+      <div class="proj-thumb pt1">🍽️</div>
+      <div class="proj-body">
+        <h3>Restaurant POS &amp; Dashboard</h3>
+        <p>Real-time order processing with live admin dashboards, deployed on Azure for high availability.</p>
+        <div class="tags"><span class="tag">.NET Core</span><span class="tag">Angular</span><span class="tag">Azure</span><span class="tag">SignalR</span></div>
+      </div>
+    </div>
+    <div class="glass proj-card">
+      <div class="proj-thumb pt2">⚖️</div>
+      <div class="proj-body">
+        <h3>Auction Management System</h3>
+        <p>Secure bidder management with financial processing and role-based access control.</p>
+        <div class="tags"><span class="tag">ASP.NET</span><span class="tag">SQL Server</span><span class="tag">RBAC</span></div>
+      </div>
+    </div>
+    <div class="glass proj-card">
+      <div class="proj-thumb pt3">🏦</div>
+      <div class="proj-body">
+        <h3>Nidhi Mitra Deposit System</h3>
+        <p>Financial deposit platform built on .NET Core APIs with Redis caching and Docker containerization.</p>
+        <div class="tags"><span class="tag">.NET Core</span><span class="tag">Redis</span><span class="tag">Docker</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education" class="reveal">
+  <h2 class="sec-title">Education <span>&amp; More</span></h2>
+  <p class="sec-sub">Background and beyond the code</p>
+  <div class="duo">
+    <div class="glass">
+      <h3>🎓 Education</h3>
+      <p><b style="color:var(--text)">B.Tech in Computer Science</b><br>KTU University · 2020 – 2024</p>
+    </div>
+    <div class="glass">
+      <h3>🤝 Volunteering</h3>
+      <p>IT Support – United Nations Social Development Summit &amp; Anti-Corruption Conference. IT Support Certificates from United Nations Events.</p>
+    </div>
+    <div class="glass">
+      <h3>🌍 Languages</h3>
+      <div class="lang-pills">
+        <span class="tag">English</span><span class="tag">Malayalam</span><span class="tag">Hindi</span><span class="tag">Tamil</span><span class="tag">Arabic</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 <b>Sahala EK</b> · Full Stack Developer · Designed with ❤️ in .NET &amp; Angular
+</footer>
+
+<script>
+  // ----- Dark / Light mode -----
+  const btn = document.getElementById('themeBtn');
+  const root = document.documentElement;
+  btn.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  });
+
+  // ----- Typing effect in hero -----
+  const roles = ['Full Stack Developer', '.NET & Angular Engineer', 'Azure Cloud Deployer', 'Database Optimizer'];
+  const typed = document.getElementById('typed');
+  let ri = 0, ci = 0, deleting = false;
+  (function type() {
+    const word = roles[ri];
+    typed.textContent = word.slice(0, ci);
+    if (!deleting && ci < word.length) { ci++; setTimeout(type, 70); }
+    else if (!deleting) { deleting = true; setTimeout(type, 1600); }
+    else if (ci > 0) { ci--; setTimeout(type, 35); }
+    else { deleting = false; ri = (ri + 1) % roles.length; setTimeout(type, 350); }
+  })();
+
+  // ----- Reveal on scroll + animate skill bars -----
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('visible');
+      e.target.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.w + '%');
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
